@@ -42,6 +42,9 @@ from trl.trainer.utils import pad
 
 from axolotl.core.trainers.grpo.fast_async_trainer import FastAsyncGRPOTrainer
 from axolotl.core.trainers.grpo.sampler import ContextParallelRepeatRandomSampler
+from axolotl.core.trainers.grpo.trl_async_trainer import (
+    AxolotlAsyncGRPOTrainer,  # noqa: F401
+)
 from axolotl.core.trainers.mixins import (
     CheckpointWriteRetryMixin,
     DistributedParallelMixin,
@@ -75,7 +78,7 @@ class AxolotlGRPOTrainer(
             self.data_collator = data_collator
 
 
-class AxolotlAsyncGRPOTrainer(
+class AxolotlDataProducerGRPOTrainer(
     CheckpointWriteRetryMixin,
     RngLoaderMixin,
     SchedulerMixin,
@@ -84,7 +87,7 @@ class AxolotlAsyncGRPOTrainer(
     DistributedParallelMixin,
     FastAsyncGRPOTrainer,
 ):
-    """Extend AsyncGRPOTrainer with axolotl helpers"""
+    """GRPOTrainer driven by axolotl's data producer protocol (EBFT, NeMo Gym)"""
 
     _tag_names = ["trl", "grpo", "async", "axolotl"]
 
