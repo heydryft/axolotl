@@ -40,7 +40,6 @@ from trl.trainer.grpo_config import GRPOConfig
 from trl.trainer.grpo_trainer import RewardFunc, nanstd
 from trl.trainer.utils import pad
 
-from axolotl.core.trainers.grpo.fast_async_trainer import FastAsyncGRPOTrainer
 from axolotl.core.trainers.grpo.sampler import ContextParallelRepeatRandomSampler
 from axolotl.core.trainers.grpo.trl_async_trainer import (
     AxolotlAsyncGRPOTrainer,  # noqa: F401
@@ -76,20 +75,6 @@ class AxolotlGRPOTrainer(
         # GRPOTrainer hardcodes an identity collator.
         if data_collator is not None:
             self.data_collator = data_collator
-
-
-class AxolotlDataProducerGRPOTrainer(
-    CheckpointWriteRetryMixin,
-    RngLoaderMixin,
-    SchedulerMixin,
-    OptimizerMixin,
-    OptimizerInitMixin,
-    DistributedParallelMixin,
-    FastAsyncGRPOTrainer,
-):
-    """GRPOTrainer driven by axolotl's data producer protocol (`use_data_producer`)"""
-
-    _tag_names = ["trl", "grpo", "async", "axolotl"]
 
 
 class AxolotlGRPOContextParallelTrainer(AxolotlGRPOTrainer):
